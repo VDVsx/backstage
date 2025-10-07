@@ -75,6 +75,7 @@ export type GithubUser = {
   email?: string;
   name?: string;
   organizationVerifiedDomainEmails?: string[];
+  suspendedAt?: string;
 };
 
 /**
@@ -141,8 +142,10 @@ export async function getOrganizationUsers(
   client: typeof graphql,
   org: string,
   tokenType: GithubCredentialType,
+  excludeSuspendedUsers: boolean = false,
   userTransformer: UserTransformer = defaultUserTransformer,
 ): Promise<{ users: Entity[] }> {
+  const suspendedAtField = excludeSuspendedUsers ? 'suspendedAt,' : '';
   const query = `
     query users($org: String!, $email: Boolean!, $cursor: String) {
       organization(login: $org) {
@@ -154,6 +157,7 @@ export async function getOrganizationUsers(
             email @include(if: $email),
             login,
             name,
+            ${suspendedAtField}
             organizationVerifiedDomainEmails(login: $org)
           }
         }

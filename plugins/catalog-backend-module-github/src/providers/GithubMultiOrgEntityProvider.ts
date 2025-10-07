@@ -166,6 +166,14 @@ export interface GithubMultiOrgEntityProviderOptions {
    * By default, groups will be namespaced according to their GitHub org.
    */
   teamTransformer?: TeamTransformer;
+
+  /**
+   * Optionally exclude suspended users when querying organization users.
+   * @defaultValue false
+   * @remarks
+   * Only for GitHub Enterprise instances. Will error if used against GitHub.com API.
+   */
+  excludeSuspendedUsers?: boolean;
 }
 
 type CreateDeltaOperation = (entities: Entity[]) => {
@@ -212,6 +220,7 @@ export class GithubMultiOrgEntityProvider implements EntityProvider {
       teamTransformer: options.teamTransformer,
       events: options.events,
       alwaysUseDefaultNamespace: options.alwaysUseDefaultNamespace,
+      excludeSuspendedUsers: options.excludeSuspendedUsers,
     });
 
     provider.schedule(options.schedule);
@@ -231,6 +240,7 @@ export class GithubMultiOrgEntityProvider implements EntityProvider {
       userTransformer?: UserTransformer;
       teamTransformer?: TeamTransformer;
       alwaysUseDefaultNamespace?: boolean;
+      excludeSuspendedUsers?: boolean;
     },
   ) {}
 
@@ -285,6 +295,7 @@ export class GithubMultiOrgEntityProvider implements EntityProvider {
         client,
         org,
         tokenType,
+        this.options.excludeSuspendedUsers,
         this.options.userTransformer,
       );
 
@@ -433,6 +444,7 @@ export class GithubMultiOrgEntityProvider implements EntityProvider {
       client,
       org,
       tokenType,
+      this.options.excludeSuspendedUsers,
       this.options.userTransformer,
     );
 
@@ -660,6 +672,7 @@ export class GithubMultiOrgEntityProvider implements EntityProvider {
       client,
       org,
       tokenType,
+      this.options.excludeSuspendedUsers,
       this.options.userTransformer,
     );
 

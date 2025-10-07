@@ -241,6 +241,13 @@ export interface Config {
             orgs?: string[];
 
             /**
+             * (Optional) Only for GitHub Enterprise. Whether to exclude suspended users when querying organization users.
+             * If true, the defaultTransformer will not return suspended users.
+             * Default: `false`.
+             */
+            excludeSuspendedUsers?: boolean;
+
+            /**
              * The refresh schedule to use.
              */
             schedule: SchedulerServiceTaskScheduleDefinitionConfig;
@@ -268,6 +275,13 @@ export interface Config {
              * orgs on the given GitHub instance (support for GitHub App integration only).
              */
             orgs?: string[];
+
+            /**
+             * (Optional) Only for GitHub Enterprise. Whether to exclude suspended users when querying organization users.
+             * If true, the defaultTransformer will not return suspended users.
+             * Default: `false`.
+             */
+            excludeSuspendedUsers?: boolean;
 
             /**
              * The refresh schedule to use.
