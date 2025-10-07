@@ -86,6 +86,7 @@ catalog:
           initialDelay: { seconds: 30 }
           frequency: { hours: 1 }
           timeout: { minutes: 50 }
+        excludeSuspendedUsers: true
 ```
 
 Directly under the `githubOrg` is a list of configurations, each entry is a structure with the following elements:
@@ -94,6 +95,7 @@ Directly under the `githubOrg` is a list of configurations, each entry is a stru
 - `githubUrl`: The target that this provider should consume
 - `orgs` (optional): The list of the GitHub orgs to consume. If you only list a single org the generated group entities will use the `default` namespace, otherwise they will use the org name as the namespace. By default the provider will consume all accessible orgs on the given GitHub instance (support for GitHub App integration only).
 - `schedule`: The refresh schedule to use, matches the structure of [`SchedulerServiceTaskScheduleDefinitionConfig`](https://backstage.io/docs/reference/backend-plugin-api.schedulerservicetaskscheduledefinitionconfig/)
+- `excludeSuspendedUsers` (optional): Whether to exclude suspended users when querying organization users. Only for GitHub Enterprise instances. Will error if used against GitHub.com API.
 
 ### Events Support
 
